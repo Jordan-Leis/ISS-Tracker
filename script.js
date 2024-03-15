@@ -1,3 +1,4 @@
+// Function to fetch ISS position
 async function getISSPosition() {
     try {
         const response = await fetch('http://api.open-notify.org/iss-now.json');
@@ -42,9 +43,10 @@ async function updateDistance() {
         document.getElementById('distance').textContent = distance;
 
         // Visual representation
-        const distancePercentage = Math.min(distance / 40000 * 100, 100); // Assuming max distance from user to ISS is 40000km
+        const maxDistance = 40000; // Assuming max distance from user to ISS is 40000km
+        const distancePercentage = (distance / maxDistance) * 100;
         const visualElement = document.getElementById('distance-visual');
-        visualElement.innerHTML = `<p>Distance Visual:</p><img src="https://via.placeholder.com/500x20.png?text=ISS" style="width: ${distancePercentage}%;"/>`;
+        visualElement.innerHTML = `<p>Distance Visual:</p><div class="visual-bar"><div class="visual-fill" style="width: ${distancePercentage}%;"></div></div>`;
     } catch (error) {
         console.log('Error updating distance:', error);
     }
